@@ -7,7 +7,7 @@ export default function NavBar() {
         <nav className="bg-transparent">
             <div className="flex flex-row h-16 w-auto p-4 justify-between items-center mx-auto">
                 <div className="flex place-content-start basis-1/2">
-                    <h1 className="bg-gradient-to-r from-emerald-600 to-emerald-900 bg-clip-text text-transparent w-auto h-11 text-2xl font-bold font-sans">
+                    <h1 className="bg-gradient-to-r from-emerald-600 to-emerald-900 bg-clip-text text-transparent w-auto h-11 text-3xl font-bold font-sans">
                         StockSage.
                     </h1>
                 </div>

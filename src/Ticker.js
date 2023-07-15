@@ -94,14 +94,14 @@ function TimeRangeComponent() {
     );
   }
 
-export default function GraphMod() {
+export default function Ticker() { 
   return (
-    <div className="space-y-5">
-      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 w-1/3 shadow-xl">
+    <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10">
+      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-xl w-5/6 mr-0">
         <CountryComponent />
         <TickerComponent />
       </div>
-      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 w-1/3 shadow-xl">
+      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-xl w-5/6 mr-0">
         <ChartComponent />
         <TimeRangeComponent/>
       </div>
