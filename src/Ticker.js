@@ -106,30 +106,33 @@ function TimeRangeComponent(props) {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-800 block w-full p-2.5"
           onChange={(e) => handleChange(e)}
         >
-          <option selected value="1M">1M</option>
-          <option value="3M">3M</option>
-          <option value="6M">6M</option>
-          <option value="1Y">1Y</option>
+          <option value="7d">1W</option>
+          <option value="1mo">1M</option>
+          <option selected value="3mo">3M</option>
+          <option value="6mo">6M</option>
+          <option value="1y">1Y</option>
         </select>
       </div>
     );
   }
 
-export default function Ticker() { 
+export default function Ticker(props) { 
   
   const [graphData, setGraphData] = useState(undefined)
   const [ticker, setTicker] = useState('TCS')
   const [market, setMarket] = useState('in')
-  const [range, setRange] = useState('1M')
+  const [range, setRange] = useState('3mo')
 
-  async function getClosePrice(market, ticker) {
-    await fetch(`http://localhost:8000/closeprice/${market}/${ticker}`)
+  async function getClosePrice(market, ticker, range) {
+    await fetch(`http://localhost:8000/closeprice/${market}/${ticker}?range=${range}`)
     .then(response => response.json())
-    .then(data => setGraphData(data))
-    .catch(() => setGraphData({}))
+    .then(data => {
+      setGraphData(data)
+    })
+    .catch(() => setGraphData([]))
   }
     
-  useEffect(() => {getClosePrice(market, ticker, range); console.log([market, ticker, range])} , [market, ticker, range])  
+  useEffect(() => {getClosePrice(market, ticker, range); props.setStateToApp(market, ticker, range)} , [market, ticker, range])  
 
   console.log(ticker)
 
@@ -147,12 +150,12 @@ export default function Ticker() {
   }
 
   return (
-    <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10">
-      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-xl w-5/6 mr-0">
+    <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10 min-h-full">
+      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-emerald-800 shadow-lg w-5/6 mr-0">
         <CountryComponent stateChanger={setState}/>
         <TickerComponent stateChanger={setState}/>
       </div>
-      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-xl w-5/6 mr-0">
+      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-emerald-800 shadow-lg w-5/6 mr-0">
         <ChartComponent 
         data={graphData}
         />
