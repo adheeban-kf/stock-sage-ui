@@ -40,7 +40,7 @@ function TickerComponent(props) {
     <div className="relative">
       <label
         for="ticker"
-        className="block mb-2 text-sm font-medium text-emerald-800"
+        className="block mb-2 text-sm font-medium text-sky-800"
       >
         Ticker
       </label>
@@ -48,7 +48,7 @@ function TickerComponent(props) {
         placeholder="TCS"
         type="text"
         id="ticker"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-800 block w-full p-2.5"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:ring-2 focus:border-sky-800 block w-full p-2.5"
         onChange={(e) => {setTicker(e.target.value); handleChange(e.target.value)}}
       />
       {ticker.length > 0 ? searchTicker() : <div />}
@@ -67,13 +67,13 @@ function CountryComponent(props) {
     <div className="relative">
       <label
         for="country"
-        className="block mb-2 text-sm font-medium text-emerald-800"
+        className="block mb-2 text-sm font-medium text-sky-800"
       >
         Select a market
       </label>
       <select
         id="country"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-800 block w-full p-2.5"
+        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:ring-2 focus:border-sky-800 block w-full p-2.5"
         onChange={(e) => handleChange(e)}
         defaultValue={"IN"}
       >
@@ -97,13 +97,13 @@ function TimeRangeComponent(props) {
       <div className="relative self-end">
         <label
           htmlFor="range"
-          className="block mb-2 text-sm font-medium text-emerald-800"
+          className="block mb-2 text-sm font-medium text-sky-800"
         >
           Range
         </label>
         <select
           id="range"
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-800 block w-full p-2.5"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:ring-2 focus:border-sky-800 block w-full p-2.5"
           onChange={(e) => handleChange(e)}
         >
           <option value="7d">1W</option>
@@ -124,12 +124,17 @@ export default function Ticker(props) {
   const [range, setRange] = useState('3mo')
 
   async function getClosePrice(market, ticker, range) {
+    if (ticker !== "") {
     await fetch(`http://localhost:8000/closeprice/${market}/${ticker}?range=${range}`)
     .then(response => response.json())
     .then(data => {
       setGraphData(data)
     })
     .catch(() => setGraphData([]))
+    }
+    else {
+      setGraphData({})
+    }
   }
     
   useEffect(() => {getClosePrice(market, ticker, range); props.setStateToApp(market, ticker, range)} , [market, ticker, range])  
@@ -150,12 +155,12 @@ export default function Ticker(props) {
   }
 
   return (
-    <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10 min-h-full">
-      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-emerald-800 shadow-lg w-5/6 mr-0">
+    <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10 justify-center">
+      <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-sky-800 shadow-lg w-5/6 mr-0">
         <CountryComponent stateChanger={setState}/>
         <TickerComponent stateChanger={setState}/>
       </div>
-      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-emerald-800 shadow-lg w-5/6 mr-0">
+      <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-sky-800 shadow-lg w-5/6 mr-0">
         <ChartComponent 
         data={graphData}
         />
