@@ -7,7 +7,7 @@ const Hero = () => {
                 Welcome to 
                 <span class="text-blue-600 "> さ StockSage</span></h1>
             <p class="text-lg font-normal text-gray-400 ">
-                Get your favorite stock analyzed by an AI. Discover key insights that could've been missed by the human eye.
+                Get your favorite stock analyzed by an AI. Discover key insights that could get lost in the oversight.
             </p>
         </div>
     )

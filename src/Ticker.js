@@ -5,29 +5,29 @@ import { useState, useEffect } from "react";
 const tickList = ["AAPL", "TATAMOTORS", "HCLINFO", "TATAELXSI"];
 
 function TickerComponent(props) {
-  const [ticker, setTicker] = useState("");
+  const [tempTicker, setTempTicker] = useState("");
 
-  const handleChange = text => {
+  const handleSubmit = () => {
+    var text = document.getElementById("ticker").value.trim()
     props.stateChanger('ticker', text);
   };
 
-  function changeTicker(e) {
+  function changeTempTicker(e) {
     var newTicker = e.target.innerText;
-    setTicker("");
+    setTempTicker("");
     document.getElementById("ticker").value = newTicker
-    handleChange(newTicker);
   }
 
   function searchTicker() {
     var filList = tickList.filter((tick) =>
-      tick.startsWith(ticker.toUpperCase())
+      tick.startsWith(tempTicker.toUpperCase())
     );
     return (
       <div className="absolute p-2 gap-2 flex-col rounded-lg bg-white shadow-lg divide-gray-50 text-gray-600 mx-2 z-40">
         {filList.map((tick) => (
           <div
             className="p-2 hover:bg-gray-300"
-            onClick={(e) => changeTicker(e)}
+            onClick={(e) => changeTempTicker(e)}
           >
             {tick}
           </div>
@@ -37,22 +37,25 @@ function TickerComponent(props) {
   }
 
   return (
-    <div className="relative">
+    <form className="flex flex-col gap-1" onSubmit={(e) => {handleSubmit(); e.preventDefault()}}>
       <label
         for="ticker"
         className="block mb-2 text-sm font-medium text-sky-800"
       >
         Ticker
       </label>
-      <input
-        placeholder="TCS"
-        type="text"
-        id="ticker"
-        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:ring-2 focus:border-sky-800 block w-full p-2.5"
-        onChange={(e) => {setTicker(e.target.value); handleChange(e.target.value)}}
-      />
-      {ticker.length > 0 ? searchTicker() : <div />}
-    </div>
+      <div className="relative">
+        <input
+          placeholder="TCS"
+          type="text"
+          id="ticker"
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-sky-500 focus:ring-2 focus:border-sky-800 block w-full p-2.5"
+          onChange={(e) => {setTempTicker(e.target.value);}}
+        />
+        {tempTicker.length > 0 ? searchTicker() : <div/>}
+      </div>
+      <input type="submit" className="bg-sky-700 text-white text-sm rounded-xl py-2 px-4 mt-4 w-1/3 focus:bg-sky-800 focus:ring-2 focus:ring-sky-500"/>
+    </form>
   );
 }
 
