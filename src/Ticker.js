@@ -2,9 +2,10 @@ import ChartComponent from "./Chart";
 import { useState, useEffect } from "react";
 
 
-const tickList = ["AAPL", "TATAMOTORS", "HCLINFO", "TATAELXSI"];
+// const tickList = ["AAPL", "TATAMOTORS", "HCLINFO", "TATAELXSI"];
 
 function TickerComponent(props) {
+  const [filList, setfilList] = useState([])
   const [tempTicker, setTempTicker] = useState("");
 
   const handleSubmit = () => {
@@ -13,25 +14,37 @@ function TickerComponent(props) {
   };
 
   function changeTempTicker(e) {
-    var newTicker = e.target.innerText;
+    var newTicker = e.key;
     setTempTicker("");
     document.getElementById("ticker").value = newTicker
   }
 
   function searchTicker() {
-    var filList = tickList.filter((tick) =>
-      tick.startsWith(tempTicker.toUpperCase())
-    );
+
+    // var filList = tickList.filter((tick) =>
+    //   tick.startsWith(tempTicker.toUpperCase())
+    // );
+    async function getFilList(market, tickerSearch) {
+      var exchange = market === 'in' ? 'NSI' : 'NMS';
+      await fetch(`http://localhost:8000/search/${exchange}/${tickerSearch}`)
+      .then(response => response.json())
+      .then(data => {
+        setfilList(data);
+      })
+      .catch(() => {setfilList([])})
+      }
+    getFilList(props.market, tempTicker);
     return (
       <div className="absolute p-2 gap-2 flex-col rounded-lg bg-white shadow-lg divide-gray-50 text-gray-600 mx-2 z-40">
-        {filList.map((tick) => (
+        {filList ? filList.map((tick) => (
           <div
             className="p-2 hover:bg-gray-300"
+            key={tick.ticker}
             onClick={(e) => changeTempTicker(e)}
           >
-            {tick}
-          </div>
-        ))}
+            {tick.longname}
+          </div> 
+        )): <div/>}
       </div>
     );
   }
@@ -142,7 +155,7 @@ export default function Ticker(props) {
     
   useEffect(() => {getClosePrice(market, ticker, range); props.setStateToApp(market, ticker, range)} , [market, ticker, range])  
 
-  console.log(ticker)
+  // console.log(ticker)
 
   let setState = (stateName, value) =>
   {
@@ -161,7 +174,7 @@ export default function Ticker(props) {
     <div className="flex flex-col space-y-5 basis-1/2 py-10 px-10 justify-center">
       <div className="flex items-stretch bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-5 shadow-sky-800 shadow-lg w-5/6 mr-0">
         <CountryComponent stateChanger={setState}/>
-        <TickerComponent stateChanger={setState}/>
+        <TickerComponent stateChanger={setState} market={market}/>
       </div>
       <div className="flex items-center bg-white rounded-xl mx-auto p-4 flex-col justify-between space-x-2 space-y-10 shadow-sky-800 shadow-lg w-5/6 mr-0">
         <ChartComponent 
