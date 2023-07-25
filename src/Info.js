@@ -1,4 +1,3 @@
-
 function Info(props) {
 
     var data = props.data
@@ -8,7 +7,6 @@ function Info(props) {
     const renameList = {
         currency: 'Currency',
         industry: 'Industry',
-        currentPrice: 'Current price',
         marketCap: 'Market cap',
         trailingPE: 'PE ratio',
         priceToBook: 'PB ratio', 
@@ -44,9 +42,7 @@ function Info(props) {
             <label for="insights" className="block mb-2 text-sm font-medium text-sky-800">
             Insights
             </label>
-            <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max">
-            <h className="text-gray-800">Sector</h> - {data.sector}
-            </p>
+            <p class="text-sm font-semibold text-gray-700 border-b border-gray-200 w-max">Sector - {data.sector}</p>
             <div class="flex items-end my-6 space-x-2">
                     <p class="text-2xl font-bold text-black">
                         {data.longName}
@@ -60,9 +56,9 @@ function Info(props) {
                     <svg width="30" fill="currentColor" height="30" class="h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z"/></svg>
                     {percentage}%
                     </span>}
-                    <h className="text-xs text-gray-500 self-center">1Y</h>
+                    <h1 className="text-xs text-gray-500 self-center">1Y</h1>
             </div>
-            <h className="text-md font-semibold text-gray-600">{props.market == 'in' ? "₹ " : '$ '}{data.currentPrice}</h>
+            <h1 className="text-md font-semibold text-gray-600">{props.market.toLowerCase() === 'in' ? "₹ " : '$ '}{data.currentPrice}</h1>
             <br/>
             {generateInfoList(data)}
         </div>

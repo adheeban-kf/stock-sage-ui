@@ -45,7 +45,7 @@ function App() {
             <Hero/>
           </div> 
         </div> 
-        <div className="p-4 min-h-screen snap-center shrink-0" id="slide-2">
+        <div className="p-4 min-h-screen snap-center shrink-0 pt-10" id="slide-2">
           <div className="flex flex-row mx-auto w-full space-x-2 place-content-center min-h-screen justify-items-center pt-10">
             <Ticker setStateToApp={setStateToApp}/>
             <Info data={infoData} market={market}/>
