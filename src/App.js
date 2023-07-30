@@ -2,6 +2,7 @@ import NavBar from "./NavBar";
 import Ticker from "./Ticker";
 import Info from "./Info";
 import Hero from "./Hero";
+import Insights from "./Insights";
 import { useState, useEffect } from "react";
 
 const bgStyle = {
@@ -49,6 +50,11 @@ function App() {
           <div className="flex flex-row mx-auto w-full space-x-2 place-content-center min-h-screen justify-items-center pt-10">
             <Ticker setStateToApp={setStateToApp}/>
             <Info data={infoData} market={market}/>
+          </div> 
+        </div> 
+        <div className="p-4 min-h-screen snap-center shrink-0 pt-10" id="slide-3">
+          <div className="flex flex-row mx-auto w-full space-x-2 place-content-center min-h-screen justify-items-center pt-10">
+            <Insights market={market} ticker={ticker}/>
           </div> 
         </div> 
       </div>

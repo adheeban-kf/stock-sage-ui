@@ -4,6 +4,12 @@ function Info(props) {
 
     var percentage = props.data['52WeekChange'] ? (props.data['52WeekChange']).toFixed(2) : NaN
     var percentageDecline = percentage < 0 ? true : false
+
+    var ifData = data.length > 0 ? true : false
+
+    console.log(data);
+    console.log(ifData);
+
     const renameList = {
         currency: 'Currency',
         industry: 'Industry',
@@ -61,7 +67,7 @@ function Info(props) {
             <h1 className="text-md font-semibold text-gray-600">{props.market.toLowerCase() === 'in' ? "₹ " : '$ '}{data.currentPrice}</h1>
             <br/>
             {generateInfoList(data)}
-        </div>
+        </div> 
         </div>
     )
 }
