@@ -39,7 +39,7 @@ function App() {
 
   return (
     <div style={bgStyle} className="overflow-none">
-      <div className="snap-y snap-proximity overflow-scroll h-screen w-screen scroll-smooth">
+      <div className="snap-y snap-proximity overflow-auto h-screen w-screen scroll-smooth">
         <NavBar/>
         <div className="p-4 min-h-screen snap-center shrink-0 bg-black" id="slide-1">
           <div className="flex flex-row mx-auto w-full space-x-2 min-h-screen justify-center items-center">

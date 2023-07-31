@@ -6,7 +6,7 @@ const subTabList = ["Insights","Data",]
 
 const Insights = (props) => {
     const [activeTab, setActiveTab] = useState('financials');
-    const [activeSubTab, setActiveSubTab] = useState('data');
+    const [activeSubTab, setActiveSubTab] = useState('Insights');
     const [data, setData] = useState({});
 
     async function getData(market, infotype, ticker) {
@@ -75,7 +75,11 @@ const Table = (props) => {
                     {props.data.data.map((row) => 
                     <tr className="table-row">
                         {Object.entries(row).map(([key,value]) => 
+                        key != 0 ?
                         <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap text-center table-cell">
+                            {value}
+                        </td> :
+                        <td className="px-6 py-4 w-1/5 text-sm font-semibold text-gray-500 bg-gray-100 text-center table-cell">
                             {value}
                         </td>
                         )}
