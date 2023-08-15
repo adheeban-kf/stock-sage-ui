@@ -29,7 +29,7 @@ const Insights = (props) => {
       }
     
     useEffect(() => {if (activeSubTab == 'Data') getData(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
-    useEffect(() => {setInsights('Good things take time... '); if (activeSubTab == 'Insights') getInsights(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
+    useEffect(() => {setInsights(''); if (activeSubTab == 'Insights') getInsights(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
 
     return (
         <div className="flex flex-row basis-11/12 justify-center py-auto px-10">
@@ -47,8 +47,14 @@ const Insights = (props) => {
                 </ul>
                 { Object.keys(data).length > 0 && activeSubTab === 'Data' ? 
                 <Table data={data}/> :
-                insights.length > 0 && activeSubTab === 'Insights' ? 
+                 activeSubTab === 'Insights' ? (insights && insights.length > 0 ?
                 <Information info={insights}/> : 
+                <div class="flex justify-center items-center h-max">
+                    <div class="relative w-14 h-14 animate-spin rounded-full bg-gradient-to-r from-green-300 to-red-300">
+                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-gray-200 rounded-full border-2 border-white"></div>
+                    </div>
+                </div>
+                ) : 
                 <div/>}
                 <ul className="grid grid-flow-col bg-gray-100 rounded-full p-1 border text-sm font-semibold w-1/3">
                     {subTabList.map(tab => 
