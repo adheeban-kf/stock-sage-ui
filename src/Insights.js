@@ -28,10 +28,8 @@ const Insights = (props) => {
         .catch(() => {setInsights('')})
       }
     
-    useEffect(() => {getData(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
-    useEffect(() => {getInsights(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
-
-    console.log('data --> ',data);
+    useEffect(() => {if (activeSubTab == 'Data') getData(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
+    useEffect(() => {setInsights('Good things take time... '); if (activeSubTab == 'Insights') getInsights(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
 
     return (
         <div className="flex flex-row basis-11/12 justify-center py-auto px-10">
@@ -106,7 +104,7 @@ const Table = (props) => {
 const Information = (props) => {
     return (
         <div className="flex-auto justify-center w-11/12 overflow-y-auto overflow-x-auto h-96 bg-slate-100 rounded-lg border" id="insight">
-            <div className=" text-gray-600 font-sans text-md p-4 whitespace-pre-line">
+            <div className=" text-gray-600 font-mono text-md p-4 whitespace-pre-line">
                 {props.info}
             </div>
         </div>
