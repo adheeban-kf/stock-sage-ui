@@ -9,7 +9,7 @@ export default function NavBar() {
                 <div className="flex place-content-start basis-1/2">
                    
                     <h1 className="animate-text bg-gradient-to-r from-green-300 to-red-300 bg-clip-text text-transparent w-auto h-11 text-5xl font-bold font-sans">
-                    さ
+                    サ
                     </h1>
                 </div>
                 <div className="flex place-content-end basis-1/2 gap-8 h-full">

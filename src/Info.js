@@ -7,9 +7,6 @@ function Info(props) {
 
     var ifData = data.length > 0 ? true : false
 
-    console.log(data);
-    console.log(ifData);
-
     const renameList = {
         currency: 'Currency',
         industry: 'Industry',

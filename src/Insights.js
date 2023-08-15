@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 const tabList = ["Financials", "Balance Sheet", "Cash Flow", "Income Statement", "Overall"]
 const subTabList = ["Insights","Data",]
 
@@ -8,19 +7,31 @@ const Insights = (props) => {
     const [activeTab, setActiveTab] = useState('financials');
     const [activeSubTab, setActiveSubTab] = useState('Insights');
     const [data, setData] = useState({});
+    const [insights, setInsights] = useState('');
 
     async function getData(market, infotype, ticker) {
-        console.log(market);
-        await fetch(`http://localhost:8000/financials/${market}/${infotype}/${ticker}`)
+        // console.log(market);
+        await fetch(`http://localhost:8000/infodata/${market}/${infotype}/${ticker}`)
         .then(response => response.json())
         .then(data => {
             setData(data);
         })
-        .catch(() => {setData([])})
+        .catch(() => {setData({})})
+      }
+
+    async function getInsights(market, infotype, ticker) {
+        await fetch(`http://localhost:8000/insights/${market}/${infotype}/${ticker}`)
+        .then(response => response.json())
+        .then(info => {
+            setInsights(info);
+        })
+        .catch(() => {setInsights('')})
       }
     
     useEffect(() => {getData(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
-    console.log(data);
+    useEffect(() => {getInsights(props.market, activeTab, props.ticker);} , [props.market, activeTab, props.ticker])  
+
+    console.log('data --> ',data);
 
     return (
         <div className="flex flex-row basis-11/12 justify-center py-auto px-10">
@@ -36,8 +47,11 @@ const Insights = (props) => {
                         <a className="flex justify-center py-3">{tab}</a>
                     </li>)}
                 </ul>
-                {Object.keys(data).length > 0  && activeSubTab == 'Data' ? 
-                <Table data={data}/> : <div/>}
+                { Object.keys(data).length > 0 && activeSubTab === 'Data' ? 
+                <Table data={data}/> :
+                insights.length > 0 && activeSubTab === 'Insights' ? 
+                <Information info={insights}/> : 
+                <div/>}
                 <ul className="grid grid-flow-col bg-gray-100 rounded-full p-1 border text-sm font-semibold w-1/3">
                     {subTabList.map(tab => 
                     <li id={tab} 
@@ -55,7 +69,6 @@ const Insights = (props) => {
 }
 
 const Table = (props) => {
-    console.log(props.data.columns);
     return (
         <div className="flex-auto justify-center w-11/12 overflow-y-auto overflow-x-auto h-96">
             <table className="divide-y divide-gray-200 border w-full max-h-max table-auto">
@@ -87,6 +100,16 @@ const Table = (props) => {
                 </tbody>
                 </table>
             </div>
+    )
+}
+
+const Information = (props) => {
+    return (
+        <div className="flex-auto justify-center w-11/12 overflow-y-auto overflow-x-auto h-96 bg-slate-100 rounded-lg border" id="insight">
+            <div className=" text-gray-600 font-sans text-md p-4 whitespace-pre-line">
+                {props.info}
+            </div>
+        </div>
     )
 }
 
