@@ -15,18 +15,23 @@ function App() {
 
   document.title = "StockSage"
 
-  const [ticker, setTicker] = useState('TCS')
+  const [ticker, setTicker] = useState('')
   const [market, setMarket] = useState('in')
   const [range, setRange] = useState('3mo')
   const[infoData, changeInfoData] = useState({})
 
   async function getInfo(market, ticker) {
+    if (ticker !== "") {
     await fetch(`http://localhost:8000/info/${market}/${ticker}`)
     .then(response => response.json())
     .then(data => {
        changeInfoData(data)
     })
     .catch(() => changeInfoData({}))
+  }
+  else {
+    changeInfoData({})
+  }
   }
 
   useEffect(() => {getInfo(market, ticker);} , [market, ticker])  
